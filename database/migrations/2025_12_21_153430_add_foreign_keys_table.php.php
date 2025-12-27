@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        Schema::table('teachers', function (Blueprint $table) {
+            $table->foreign('filiere_id')
+                  ->references('id')
+                  ->on('filieres')
+                  ->onDelete('set null');
+        });
+        
+        Schema::table('groupes', function (Blueprint $table) {
+            $table->foreign('filiere_id')
+                  ->references('id')
+                  ->on('filieres')
+                  ->onDelete('cascade');
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('teachers', function (Blueprint $table) {
+            $table->dropForeign(['filiere_id']);
+        });
+        
+        Schema::table('groupes', function (Blueprint $table) {
+            $table->dropForeign(['filiere_id']);
+        });
+    }
+};
