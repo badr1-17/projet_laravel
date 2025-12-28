@@ -18,12 +18,12 @@ return new class extends Migration
         });
         
         // Table pivot pour la relation many-to-many
-        Schema::create('module_teacher', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('module_id')->constrained()->onDelete('cascade');
-            $table->foreignId('teacher_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
-        });
+            Schema::create('module_teacher', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('module_id')->constrained()->onDelete('cascade');
+                $table->foreignId('teacher_id')->constrained()->onDelete('cascade');
+                $table->timestamps();
+            });
     }
 
     public function down()

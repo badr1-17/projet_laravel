@@ -9,28 +9,24 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $table = "courses";   // nom de la table
-
     protected $fillable = [
-        'titre',
+        'title',
         'description',
-        'type',
-        'fichier',
         'module_id',
-        'groupe_id',
-        'teacher_id'
+        'groupe',
+        'file_type',
+        'file_path',
+        'teacher_id',
+        'upload_date'
     ];
 
-   
+    protected $casts = [
+        'upload_date' => 'datetime'
+    ];
+
     public function module()
     {
         return $this->belongsTo(Module::class);
-    }
-
-  
-    public function groupe()
-    {
-        return $this->belongsTo(Groupe::class);
     }
 
     public function teacher()

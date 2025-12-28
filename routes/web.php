@@ -63,11 +63,36 @@ Route::prefix('admin')->group(function () {
     });
 });
 
+
 // partie de Teacher
 Route::prefix('teacher')->name('teacher.')->group(function () {
     Route::get('/dashboard', [TeacherController::class, 'dashboard'])->name('dashboard');
     Route::post('/courses/store', [TeacherController::class, 'storeCourse'])->name('courses.store');
-     Route::get('/courses', [TeacherController::class, 'indexCourses'])->name('courses.index');
+     Route::get('/courses', [TeacherController::class, 'myCourses'])->name('courses.index');
+
+     // Routes pour le professeur
+Route::middleware(['auth', 'role:teacher'])->prefix('teacher')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [TeacherController::class, 'dashboard'])->name('teacher.dashboard');
+    
+    // Cours
+     Route::get('/courses', [TeacherController::class, 'myCourses'])->name('courses.index');
+    
+    // Ajouter un cours
+    Route::post('/courses', [TeacherController::class, 'storeCourse'])->name('courses.store');
+    
+    // Voir un cours
+    Route::get('/courses/{id}', [TeacherController::class, 'showCourse'])->name('courses.show');
+    
+    // Modifier un cours
+    Route::put('/courses/{id}', [TeacherController::class, 'updateCourse'])->name('courses.update');
+    
+    // Supprimer un cours
+    Route::delete('/courses/{id}', [TeacherController::class, 'deleteCourse'])->name('courses.delete');
+
+});
+
+
 });
 
 
